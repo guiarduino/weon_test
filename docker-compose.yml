@@ -1,0 +1,37 @@
+services:
+  weon_api:
+    image: weon_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: weon_api
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - weon_api_db
+    env_file:
+      - .env
+    environment:
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+
+  weon_api_db:
+    image: mysql:8.1
+    container_name: weon_api_db
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - weon_db_data:/var/lib/mysql
+
+volumes:
+  weon_db_data:
