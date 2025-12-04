@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Services\MessageService;
+
 class ProcessWebhookJob extends Job
 {
     protected $number;
@@ -16,13 +18,19 @@ class ProcessWebhookJob extends Job
     public function handle()
     {
         $type = $this->data['type'] ?? null;
+        $service = app(MessageService::class);
 
-        if ($type === 'message') {
-            // mensagem nova
-        }
-
-        if ($type === 'message-event') {
-            // atualização
+        switch ($type) {
+            case 'message':
+                $service->storeIncoming($this->number, $this->data);
+                break;
+            
+            case 'message-event':
+                $service->updateStatus($this->number, $this->data);
+            
+            default:
+                # code...
+                break;
         }
     }
 }

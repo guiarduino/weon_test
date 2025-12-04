@@ -57,7 +57,7 @@ RUN echo '<IfModule mod_rewrite.c>\n\
 
 # Copia o script run.sh
 COPY run.sh /usr/local/bin/run.sh
-RUN chmod +x /usr/local/bin/run.sh
+RUN sed -i 's/\r$//' /usr/local/bin/run.sh && chmod +x /usr/local/bin/run.sh
 
 # Define diretório de trabalho
 WORKDIR /var/www/html

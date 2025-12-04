@@ -48,6 +48,8 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(App\Services\MessageService::class, App\Services\MessageService::class);
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
