@@ -20,11 +20,9 @@ class MessageController extends Controller
 
      public function store(array $data)
     {
-        return $this->service->storeIncoming($data);
     }
 
     public function updateEvent(array $data)
     {
-        return $this->service->updateStatus($data);
     }
 }
